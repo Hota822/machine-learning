@@ -2,10 +2,15 @@ version: '3'
 services:
   #======================================================================  python3  ======
   anaconda:
-    image: continuumio/anaconda3:2020.02
-    command: /bin/sh -c "while sleep 1000; do :; done"
+    build: ./python
+    working_dir: /opt/flask
+    command: flask run
+    # command: /bin/sh -c "while sleep 1000; do :; done"
     restart: always
     ports:
      - 8888:8888
+     - 5000:5000
     volumes:
-       - ./code:/opt/code
+      - ./python/flask:/opt/flask
+    environment:
+      - FLASK_ENV=development

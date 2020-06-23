@@ -1,0 +1,8 @@
+FROM continuumio/anaconda3:2020.02
+WORKDIR /opt/flask
+COPY flask /opt/flask
+
+# RUN flask run --host 0.0.0.0 --port 5000
+# RUN /bin/sh -c "while sleep 10; do :; done"
+
+
