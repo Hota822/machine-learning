@@ -1,0 +1,11 @@
+version: '3'
+services:
+  #======================================================================  python3  ======
+  anaconda:
+    image: continuumio/anaconda3:2020.02
+    command: /bin/sh -c "while sleep 1000; do :; done"
+    restart: always
+    ports:
+     - 8888:8888
+    volumes:
+       - ./code:/opt/code
