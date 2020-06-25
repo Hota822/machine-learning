@@ -8,8 +8,8 @@ services:
         - ENV=${ENV}
     working_dir: /opt/flask
     # command: flask run
-    command: uwsgi --http 0.0.0.0:5000  --wsgi-file /opt/flask/app.py --callable app --logto /tmp/mylog.log
-    restart: always
+    entrypoint: uwsgi --http 0.0.0.0:5000  --wsgi-file /opt/flask/app.py --callable app
+    # restart: always
     tty: true
     ports:
      - 8888:8888
@@ -18,3 +18,4 @@ services:
       - ./python/flask:/opt/flask
     environment:
       - FLASK_ENV=development
+      - PYTHONUNBUFFERED=1

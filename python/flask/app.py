@@ -9,7 +9,8 @@ app = Flask(__name__)
 
 # 直接このファイルが実行されたときのみ、アプリケーションが起動
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    # app.run(host='0.0.0.0', port=5000)
+    app.run()
 
 @app.route('/hello', methods=['GET'])
 def hello_world():
