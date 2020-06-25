@@ -1,8 +1,17 @@
 FROM continuumio/anaconda3:2020.02
+
+# for development
+WORKDIR /usr/local/src
+ARG ENV
+COPY dev_tools.sh /usr/local/src
+RUN bash ./dev_tools.sh
+
+RUN groupadd -r uwsgi && useradd -r -g uwsgi uwsgi
+RUN conda install -yc conda-forge \
+    libiconv \
+    uwsgi
+
+# USER uwsgi
 WORKDIR /opt/flask
 COPY flask /opt/flask
-
-# RUN flask run --host 0.0.0.0 --port 5000
-# RUN /bin/sh -c "while sleep 10; do :; done"
-
 

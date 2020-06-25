@@ -13,8 +13,8 @@ if __name__ == '__main__':
 
 @app.route('/hello', methods=['GET'])
 def hello_world():
-    return 'Hello World'
+    return 'Hello World\n'
 
 @app.route('/post', methods=['POST'])
 def post():
-    return 'POST is success'
+    return 'POST is success\n'

@@ -2,11 +2,15 @@ version: '3'
 services:
   #======================================================================  python3  ======
   anaconda:
-    build: ./python
+    build:
+      context: ./python
+      args:
+        - ENV=${ENV}
     working_dir: /opt/flask
-    command: flask run
-    # command: /bin/sh -c "while sleep 1000; do :; done"
+    # command: flask run
+    command: uwsgi --http 0.0.0.0:5000  --wsgi-file /opt/flask/app.py --callable app --logto /tmp/mylog.log
     restart: always
+    tty: true
     ports:
      - 8888:8888
      - 5000:5000
