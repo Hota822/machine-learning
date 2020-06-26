@@ -8,14 +8,33 @@ services:
         - ENV=${ENV}
     working_dir: /opt/flask
     # command: flask run
-    entrypoint: uwsgi --http 0.0.0.0:5000  --wsgi-file /opt/flask/app.py --callable app
-    # restart: always
-    tty: true
+    entrypoint: uwsgi
+    command: --ini /opt/flask/app.ini
+    restart: always
+    # tty: true
     ports:
      - 8888:8888
      - 5000:5000
     volumes:
       - ./python/flask:/opt/flask
+      - web_app_socket:/{$WEB_APP_SOCKET}
     environment:
-      - FLASK_ENV=development
+      # stdout, strerrへの出力をバッファせずに即座に出力させる
       - PYTHONUNBUFFERED=1
+
+  nginx:
+    build:
+      context: ./nginx
+    ports:
+      - 80:80
+      # - 443:443
+    volumes:
+      - ./nginx/log:/var/log/nginx
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      # - ./nginx/uwsgi_params:/etc/nginx/uwsgi_params
+      # - ./static:/static
+      - web_app_socket:/var/run/uwsgi
+    depends_on:
+      - anaconda
+volumes:
+  web_app_socket:
